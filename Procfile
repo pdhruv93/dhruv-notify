@@ -1,1 +1,1 @@
-web: gunicorn app:restapi
+web: gunicorn app:app

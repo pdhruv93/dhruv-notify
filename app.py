@@ -1,6 +1,9 @@
 # app.py
+import os
+import psycopg2
 from flask import Flask, request, jsonify
 app = Flask(__name__)
+DATABASE_URL = os.environ['DATABASE_URL']
 
 @app.route('/getmsg/', methods=['GET'])
 def respond():
@@ -48,4 +51,5 @@ def index():
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
+    print(DATABASE_URL)
     app.run(threaded=True, port=5000)

@@ -30,7 +30,37 @@ app=Flask(__name__)
 
 @app.route('/')
 def index():
-    print("Sample___")
+     try:
+        driver.find_element_by_id('idSIButton9')
+        
+        #its not login. so perform login
+        print("Performing Login to Skype")
+        driver.find_element_by_id('i0116').send_keys(skypeusername)
+        time.sleep(2)
+        driver.find_element_by_id('idSIButton9').click()
+        time.sleep(2)
+        driver.find_element_by_id('i0118').send_keys(skypepassword)  
+        time.sleep(2)
+        driver.find_element_by_id('idSIButton9').click()
+        time.sleep(6)
+    except:
+         #its already login. refresh and get count
+        driver.refresh()
+        time.sleep(6)
+        
+        try:
+            temp1=driver.title.split(')')[0]
+            temp2=temp1.split('(')[1]
+        
+            skypeNotifications=temp2
+        except:
+            skypeNotifications=0
+            
+        if not skypeNotifications:
+            skypeNotifications=0
+        
+        print("{}:".format(skypeNotifications))
+        time.sleep(6)
     return '<h1>Dhruv-----</h1>'
 	
 if __name__ == '__main__':

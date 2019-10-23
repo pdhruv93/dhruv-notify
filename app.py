@@ -22,7 +22,14 @@ skypeurl = 'https://web.skype.com/'
 skypeusername = 'dhruv.pandey5'
 skypepassword = 'dhruv.pandey5'
 
-while True:
+
+
+app=Flask(__name__)
+
+
+
+@app.route('/')
+def index():
     try:
         driver.find_element_by_id('idSIButton9')
         
@@ -37,7 +44,7 @@ while True:
         driver.find_element_by_id('idSIButton9').click()
         time.sleep(6)
     except:
-         #its already login. refresh and get count
+        #its already login. refresh and get count
         driver.refresh()
         time.sleep(6)
         
@@ -54,23 +61,7 @@ while True:
         
         print("{}:".format(skypeNotifications))
         time.sleep(6)
-
-
-
-
-# In[ ]:
-
-
-app=Flask(__name__)
-
-
-# In[ ]:
-
-
-@app.route('/')
-def index():
     return '<h1>Dhruv-----</h1>'
 	
 if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
     app.run(threaded=True, port=5000)

@@ -22,7 +22,7 @@ skypeurl = 'https://web.skype.com/'
 skypeusername = 'dhruv.pandey5'
 skypepassword = 'dhruv.pandey5'
 
-
+driver.get(skypeurl)
 
 app=Flask(__name__)
 

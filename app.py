@@ -61,7 +61,7 @@ skypeThread = threading.Thread(target=skypeCountManager)
 skypeThread.start()
 
 app=Flask(__name__)
-@app.route('/')
+@app.route('/core')
 def index():
     getNotificationCounts()
     return '<h1>Dhruv-----</h1>'

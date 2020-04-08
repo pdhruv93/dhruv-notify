@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  
+  <link href="fonts/css/all.css" rel="stylesheet">
+  
+  <script>
+  $( document ).ready(function() {
+  
+  
+  var today = new Date();
+  var day = today.getDay();
+
+  var daylist = ["Sunday","Monday","Tuesday","Wednesday ","Thursday","Friday","Saturday"];
+  console.log("Today is : " + daylist[day] + ".");
+  var hours = today.getHours();
+  
+  $(".day").html(daylist[day]);
+  $(".date").html("  "+today.getDate());
+  
+  $("#plusfour").html(hours+4);
+  $("#pluseight").html(hours+8);
+  
+  $(".time").html(hours+":"+today.getMinutes());
+  
+  var inr="";
+  
+  $.get( "https://api.exchangeratesapi.io/latest", function( data ) {
+		inr=data["rates"]["INR"];
+		$("#inr").html(inr);
+	});
+	
+	
+	
+	function refreshCurrency()
+	{
+		 $.get( "https://api.exchangeratesapi.io/latest", function( data ) {
+		inr=data["rates"]["INR"];
+		$("#inr").html(inr);
+	});
+		
+		setTimeout(refreshCurrency, 180*60*1000);
+		
+	}
+	 
+	 refreshCurrency();
+	
+	
+	
+	
+	function refreshTemp()
+	{
+		$.get( "http://api.openweathermap.org/data/2.5/weather?q=Helsinki&appid=42c1a48c354c41d7a6ed1ed138a33fb5&units=metric", function( data ) {
+		
+		var icon=data["weather"][0]["icon"]
+		
+		$('#weather').attr('src', 'http://openweathermap.org/img/wn/'+icon+'@2x.png');
+		
+		
+		
+		$("#now").html(data["main"]["temp"]);
+		});
+		
+		setTimeout(refreshTemp, 10*60*1000);
+		
+	}
+	 
+	 refreshTemp();
+	
+	
+	
+	function refreshTime()
+	{
+		var now = new Date();
+		$(".time").html(now.getHours()+":"+now.getMinutes());
+		
+		setTimeout(refreshTime, 10000);
+		
+	}
+	 
+	 refreshTime();
+
+
+function refreshNoti()
+	{
+		$.get( "http://localhost:5000/getcounts/", function( data ) {
+		
+	
+		$("#facebook").html(data["fbNotifications"]);
+		$("#messenger").html(data["msgNotifications"]);
+		$("#whatsapp").html(data["waNotifications"]);
+		$("#youtube").html(data["ytNotifications"]);
+		
+		
+		});
+		
+		
+		setTimeout(refreshNoti, 5000);
+		
+	}
+	 
+	 refreshNoti();
+  
+  
+  
+  });
+  
+  
+  </script>
+  
+  <style>
+	body{
+		background-color: black;
+		color: white;
+	}
+	
+	.flex-container{
+		margin: 14% !important;
+	}
+	
+	.day{
+		font-size: 70px;
+		float: right;
+	}
+	
+	.date{
+		font-size: 100px;
+		font-weight: bold;
+		float: right;
+	}
+	
+	.time{
+		font-size: 160px;
+		float:right;
+		margin-top: -4%;
+    margin-left: 54%;
+	}
+  
+  .main{
+	margin-left: 12%;
+    margin-right: 12%;
+    margin-top: 5%;
+    border: 1px solid white;
+    width: 81%;
+    height: 630px;
+	padding: 4%;
+  }
+  
+  </style>
+  
+  
+</head>
+
+<body>
+
+<div class="main" style="margin-left: 12%;margin-right: 12%;margin-top: 5%;">
+	<div style="float:left; font-size:50px; margin-right: 6%;">
+		<text>Now</text><br><img id="weather" style="height: 176px;height: 176px;margin-top: -33%; margin-left: -16%;margin-bottom: -29%;" src="http://openweathermap.org/img/wn/04d@2x.png"><br><text id="now"></text>
+	</div>
+	
+	<!--<div style="float:left; font-size:50px; margin-right: 6%;">
+		<text id="plusfour"></text><br><i class="fas fa-cloud-moon-rain" style="font-size:100px; color: white; "></i><br>66
+	</div>
+	
+	<div style="float:left; font-size:50px;margin-right: 6%;">
+		<text id="pluseight"></text><br><i class="far fa-snowflake" style="font-size:100px; color: white; "></i><br>66
+	</div>-->
+ 
+ 
+ <div style="float:right;"><text class="day"></text><br><text class="date"></text></div>
+ 
+ 
+ 
+	<div style="font-size:50px;">
+		EUR<br><b><text id="inr"></text></b>
+		
+		<text class="time"></text>
+	</div>
+<br><br><br><br>
+
+
+<div style="margin-top: 15%;">
+<i class="fab fa-facebook-f" style="font-size: 80px;"></i><div id="facebook" style="margin-top: -7%;margin-left: 4%;font-size: 23px;">67</div>
+<i class="fab fa-facebook-messenger" style="font-size: 80px; margin-left: 11%; margin-top: -1%;"></i><div id="messenger" style="margin-top: -7%;margin-left: 16%;font-size: 23px;">67</div>
+<i class="fab fa-whatsapp" style="font-size: 80px; margin-left: 25%; margin-top: -1%;"></i><div id="whatsapp" style="margin-top: -7%;margin-left: 30%;font-size: 23px;">67</div>
+<i class="fab fa-youtube" style="font-size: 80px; margin-left: 37%; margin-top: -1%;"></i><div id="youtube" style="margin-top: -7%;margin-left: 43%;font-size: 23px;">67</div>
+
+
+</div>
+
+
+
+ 
+ 
+</div>
+
+
+</body>
+</html>
+</html>
